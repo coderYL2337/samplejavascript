@@ -18,9 +18,10 @@ function validateItem(item) {
   return true;
 }
 
-// No error handling for division by zero
-function calculateAveragePrice(items) {
-  const total = calculateTotal(items);
+```javascript
+    if (items.length === 0) {
+      throw new Error("Cannot calculate average: no items provided");
+    }
   return Number((total / items.length).toFixed(2));
 }
 
