@@ -26,17 +26,14 @@ function validateItem(item) {
 }
 
 // Complex function with nested logic might trigger complexity warnings
+```javascript
 function processItems(items) {
   let result = 0;
-  for (let i = 0; i < items.length; i++) {
-    if (items[i].price) {
-      if (items[i].price > 0) {
-        if (items[i].quantity) {
-          result += items[i].price * items[i].quantity;
-        } else {
-          result += items[i].price;
-        }
-      }
+  for (const item of items) {
+    if (item.price) {
+      result += item.price * (item.quantity || 1);
+    } else {
+      result++;
     }
   }
   return result;
