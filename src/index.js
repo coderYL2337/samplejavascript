@@ -1,26 +1,22 @@
-const express = require("express");
-const { calculateTotal } = require("./utils");
-
-const app = express();
-const port = process.env.PORT || 3000;
-
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to PR Bot Test API" });
-});
-
 app.post("/calculate", (req, res) => {
   const { items } = req.body;
 
-  if (!Array.isArray(items)) {
-    return res.status(400).json({ error: "Items must be an array" });
-  }
-
+  // No try-catch block for potential errors
   const total = calculateTotal(items);
-  res.json({ total });
+  const average = calculateAveragePrice(items);
+  const processed = processItems(items);
+
+  res.json({
+    total,
+    average,
+    processed,
+    itemCount: items.length,
+  });
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+// Endpoint without proper input validation
+app.post("/quick-calculate", (req, res) => {
+  res.json({
+    result: processItems(req.body.items),
+  });
 });
